@@ -1,5 +1,5 @@
 {
-  "name": "what's-for-dinner",
+  "name": "whats-for-dinner",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -10,5 +10,9 @@
   "devDependencies": {
     "typescript": "^5.5.3"
   },
-  "private": true
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

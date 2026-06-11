@@ -10,8 +10,12 @@ yarn-error.log*
 
 .vscode/*
 
-**/.env
+apps/mobile/.env
 **/.env.*
+**/.env
+**/.expo
+
+apps/mobile/assets/
 
 
 **/node_modules/
