@@ -32,14 +32,17 @@ export class DietService {
 
         const { error } = await this.supabase
             .from('dietary_preferences')
-            .upsert({
-                user_id: userId,
-                diet_type: data.dietType,
-                allergies: data.allergies,
-                intolerances: data.intolerances ?? [],
-                disliked_ingredients: data.dislikedIngredients ?? [],
-                cuisine_preferences: data.cuisinePreferences ?? []
-            })
+            .upsert(
+                {
+                    user_id: userId,
+                    diet_type: data.dietType,
+                    allergies: data.allergies,
+                    intolerances: data.intolerances ?? [],
+                    disliked_ingredients: data.dislikedIngredients ?? [],
+                    cuisine_preferences: data.cuisinePreferences ?? []
+                },
+                { onConflict: 'user_id' }
+            )
 
         if (error) throw new Error(error.message)
     }

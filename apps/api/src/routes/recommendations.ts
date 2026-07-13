@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { streamSSE } from 'hono/streaming'
-import { runAgent } from '../services/agentService'
+import { AgentService } from '../services/external_calls/AgentService'
+import {supabase} from "../lib/supabase";
 
 type Variables = { userId: string }
 const app = new Hono<{ Variables: Variables }>()
@@ -12,7 +13,8 @@ app.get('/stream', async (c) => {
 
     return streamSSE(c, async (stream) => {
         try {
-            for await (const event of runAgent(userId, prompt)) {
+            const agent = new AgentService(supabase)
+            for await (const event of agent.run(userId, prompt)) {
                 await stream.writeSSE({
                     data: JSON.stringify(event),
                     event: event.type

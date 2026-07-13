@@ -41,15 +41,19 @@ export class UserContextService {
             throw new Error('equipment must be an array')
         }
 
-        const { error } = await this.supabase.from('user_context').upsert({
-            user_id: userId,
-            weekday_cook_min: data.weekdayCookMin ?? 30,
-            weekend_cook_min: data.weekendCookMin ?? 60,
-            weekly_budget_usd: data.weeklyBudgetUsd ?? null,
-            per_meal_budget_usd: data.perMealBudgetUsd ?? null,
-            cooking_skill: data.cookingSkill,
-            equipment: data.equipment ?? []
-        })
+        const { error } = await this.supabase.from('user_context')
+            .upsert(
+                {
+                    user_id: userId,
+                    weekday_cook_min: data.weekdayCookMin ?? 30,
+                    weekend_cook_min: data.weekendCookMin ?? 60,
+                    weekly_budget_usd: data.weeklyBudgetUsd ?? null,
+                    per_meal_budget_usd: data.perMealBudgetUsd ?? null,
+                    cooking_skill: data.cookingSkill,
+                    equipment: data.equipment ?? []
+                },
+                { onConflict: 'user_id' }
+        )
 
         if (error) throw new Error(error.message)
     }

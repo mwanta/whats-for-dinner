@@ -54,7 +54,7 @@ export class MacroService {
 
         const { error } = await this.supabase
             .from('macro_targets')
-            .upsert({ user_id: userId, ...targets })
+            .upsert({ user_id: userId, ...targets }, { onConflict: 'user_id' })
 
         if (error) throw new Error(error.message)
     }

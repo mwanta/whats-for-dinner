@@ -2,6 +2,7 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { createClient } from '@supabase/supabase-js'
+import 'dotenv/config'
 import profile from './routes/profile'
 import recommendations from './routes/recommendations'
 
@@ -31,6 +32,6 @@ app.get('/', (c) => c.json({ status: 'ok' }))
 app.route('/api/profile', profile)
 app.route('/api/recommendations', recommendations)
 
-serve({ fetch: app.fetch, port: 3000 }, (info) => {
+serve({ fetch: app.fetch, port: 3000, hostname: '0.0.0.0' }, (info) => {
     console.log(`Server running on http://localhost:${info.port}`)
 })

@@ -36,15 +36,19 @@ export class ProfileService {
             throw new Error(`activityLevel must be one of: ${ACTIVITY_LEVELS.join(', ')}`)
         }
 
-        const { error } = await this.supabase.from('profiles').upsert({
-            id: userId,
-            goal: data.goal,
-            activity_level: data.activityLevel,
-            age: data.age ?? null,
-            weight_kg: data.weightKg ?? null,
-            height_cm: data.heightCm ?? null,
-            sex: data.sex ?? null
-        })
+        const { error } = await this.supabase.from('profiles')
+            .upsert(
+            {
+                id: userId,
+                goal: data.goal,
+                activity_level: data.activityLevel,
+                age: data.age ?? null,
+                weight_kg: data.weightKg ?? null,
+                height_cm: data.heightCm ?? null,
+                sex: data.sex ?? null
+            },
+            { onConflict: 'user_id' }
+        )
         if (error) throw new Error(error.message)
 
         if (data.age && data.weightKg && data.heightCm && data.sex) {

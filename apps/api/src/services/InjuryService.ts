@@ -17,7 +17,6 @@ export class InjuryService {
             id: i.id,
             bodyPart: i.body_part,
             injuryType: i.injury_type,
-            severity: i.severity,
             restrictions: i.restrictions ?? [],
             nutritionNotes: i.nutrition_notes,
             active: i.active
