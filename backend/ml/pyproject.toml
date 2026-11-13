@@ -1,0 +1,23 @@
+[project]
+name = "dinner-ml"
+version = "0.1.0"
+description = "Preference model, meal-plan optimizer, and data pipeline for what's-for-dinner"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=2.2",
+    "pyarrow>=15",
+    "scipy>=1.13",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["dinner_ml*"]
+
+[tool.setuptools.package-data]
+dinner_ml = ["data/*.csv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
